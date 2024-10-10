@@ -75,9 +75,8 @@ RUN ./configure \
    --with-db-type=mysql \
    --with-db-rt-host=mysql \
    --with-web-user=rt \
-   --with-web-group=rt
-
-#   --enable-externalauth \
+   --with-web-group=rt \
+   --enable-externalauth 
 
 RUN make fixdeps && rm -fr ~/.cpan
 RUN make testdeps
@@ -86,7 +85,6 @@ RUN make install
 ENV PERL5LIB=/opt/rt/lib
 
 RUN cpanm RT::Extension::MergeUsers && rm -fr ~/.cpanm
-RUN cpanm RT::Authen::ExternalAuth
 RUN cpanm RT::Extension::MandatoryFields
 
 WORKDIR /opt/rt
