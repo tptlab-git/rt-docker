@@ -62,7 +62,6 @@ RUN apk add --no-cache w3m
 
 RUN mkdir /usr/src
 RUN curl -fLs https://download.bestpractical.com/pub/rt/release/rt-$RTVERSION.tar.gz | tar -C /usr/src -xz
-# RUN curl -fLs https://download.bestpractical.com/pub/rt/devel/rt-$RTVERSION.tar.gz | tar -C /usr/src -xz
 
 
 WORKDIR /usr/src/rt-$RTVERSION
@@ -79,7 +78,6 @@ RUN ./configure \
    --with-web-group=rt
 
 #   --enable-externalauth \
-#   --enable-gpg --enable-smime \
 
 RUN make fixdeps && rm -fr ~/.cpan
 RUN make testdeps
@@ -88,6 +86,8 @@ RUN make install
 ENV PERL5LIB=/opt/rt/lib
 
 RUN cpanm RT::Extension::MergeUsers && rm -fr ~/.cpanm
+RUN cpanm RT::Authen::ExternalAuth
+RUN cpanm RT::Extension::MandatoryFields
 
 WORKDIR /opt/rt
 
