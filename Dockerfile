@@ -66,8 +66,9 @@ RUN curl -fLs https://download.bestpractical.com/pub/rt/release/rt-$RTVERSION.ta
 
 WORKDIR /usr/src/rt-$RTVERSION
 
-ADD smtp.patch /tmp/
-RUN patch -p1 < /tmp/smtp.patch && rm /tmp/smtp.patch
+# Comment out patch
+# ADD smtp.patch /tmp/
+# RUN patch -p1 < /tmp/smtp.patch && rm /tmp/smtp.patch
 
 RUN ./configure \
    --prefix=/opt/rt \
